@@ -1,0 +1,42 @@
+--- /cygdrive/c/Perl/bin/perldoc.bat	2003-04-13 21:39:36.000000000 +0300
++++ /cygdrive/c/Perl/bin/perldoc.patched.bat	2003-07-23 15:30:36.000000000 +0300
+@@ -56,7 +56,8 @@
+ 	my $me = $0;		# Editing $0 is unportable
+ 	$me =~ s,.*/,,;
+ 	die <<EOF;
+-Usage: $me [-h] [-r] [-i] [-v] [-t] [-u] [-m] [-n program] [-l] [-F] [-X] PageName|ModuleName|ProgramName
++Usage: $me [-h] [-r] [-i] [-v] [-t] [-u] [-m] [-n program] [-L language] 
++	   [-l] [-F] [-X] PageName|ModuleName|ProgramName
+        $me -f PerlFunc
+        $me -q FAQKeywords
+ 
+@@ -92,6 +93,7 @@
+     -m   Display module's file in its entirety
+     -n   Specify replacement for nroff
+     -l   Display the module's file name
++    -L   Choose documentation translation language (if any)
+     -F   Arguments are file names, not modules
+     -v	 Verbosely describe what's going on
+     -X	 use index if present (looks for pod.idx at $Config{archlib})
+@@ -124,9 +126,9 @@
+     unshift(@ARGV, Text::ParseWords::shellwords($ENV{"PERLDOC"}));
+ }
+ 
+-use vars qw( $opt_m $opt_h $opt_t $opt_l $opt_u $opt_v $opt_r $opt_i $opt_F $opt_f $opt_X $opt_q $opt_n $opt_U );
++use vars qw( $opt_m $opt_h $opt_t $opt_l $opt_u $opt_v $opt_r $opt_i $opt_F $opt_f $opt_X $opt_q $opt_n $opt_U $opt_L);
+ 
+-getopts("mhtluvriFf:Xq:n:U") || usage;
++getopts("mhtluvriFf:Xq:n:UL:") || usage;
+ 
+ usage if $opt_h;
+ 
+@@ -383,6 +385,9 @@
+ 
+ my @found;
+ foreach (@pages) {
++    if ( $opt_L ) {
++        $_ = 'POD2::' . uc($opt_L) . '::' . $_;
++    }
+     if ($podidx && open(PODIDX, $podidx)) {
+ 	my $searchfor = catfile split '::';
+ 	print STDERR "Searching for '$searchfor' in $podidx\n" if $opt_v;
