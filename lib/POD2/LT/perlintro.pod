@@ -1,6 +1,8 @@
+=encoding iso-8859-13
+
 =head1 NAME
 
-perlintro -- Trumpas ávadas á Perlà
+perlintro - Trumpas ávadas á Perlà
 
 =head1 DESCRIPTION
 
@@ -488,7 +490,7 @@ Jeigu patys norite raðytis Perlo modulius, skaitykite L<perlnewmod> dokumentacij
 
 =head1 AUTHOR
 
-Vertë Petras Kudaras <moxliukas@delfi.lt>
+Vertë Petras Kudaras <moxliukas@delfi.lt> 2003-2004.
 Pastabos, pataisymai ir pasiûlymai labai laukiami.
 
 =cut
